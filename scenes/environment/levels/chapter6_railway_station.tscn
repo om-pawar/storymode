@@ -1,0 +1,99 @@
+[gd_scene load_steps=15 format=3 uid="uid://ch6_punestation001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/level_chapter6.gd" id="1_ch6"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_meera.tscn" id="3_meera"]
+[ext_resource type="PackedScene" path="res://scenes/environment/rain_particles.tscn" id="4_rain"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/train_wagon.tscn" id="5_train"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/street_lamp.tscn" id="6_lamp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_rain"]
+sky_top_color = Color(0.1, 0.12, 0.18, 1)
+sky_horizon_color = Color(0.2, 0.25, 0.35, 1)
+ground_bottom_color = Color(0.06, 0.08, 0.1, 1)
+
+[sub_resource type="Sky" id="Sky_rain"]
+sky_material = SubResource("ProceduralSkyMaterial_rain")
+
+[sub_resource type="Environment" id="Environment_station"]
+background_mode = 2
+sky = SubResource("Sky_rain")
+ambient_light_source = 3
+ambient_light_color = Color(0.5, 0.55, 0.65, 1)
+ambient_light_energy = 0.85
+fog_enabled = true
+fog_light_color = Color(0.15, 0.18, 0.25, 1)
+fog_density = 0.015
+
+[sub_resource type="StandardMaterial3D" id="Mat_Platform"]
+albedo_color = Color(0.3, 0.3, 0.32, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_platform"]
+size = Vector3(36, 0.6, 12)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_platform"]
+size = Vector3(36, 0.6, 12)
+
+[sub_resource type="StandardMaterial3D" id="Mat_StationSign"]
+albedo_color = Color(0.95, 0.8, 0.18, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_sign"]
+size = Vector3(3.2, 0.8, 0.1)
+
+[node name="Chapter6RailwayStation" type="Node3D"]
+script = ExtResource("1_ch6")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_station")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 15, 0)
+light_color = Color(0.65, 0.75, 0.9, 1)
+light_energy = 0.7
+shadow_enabled = true
+
+[node name="Platform" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+material_override = SubResource("Mat_Platform")
+mesh = SubResource("BoxMesh_platform")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+shape = SubResource("BoxShape3D_platform")
+
+[node name="StationSign" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
+material_override = SubResource("Mat_StationSign")
+mesh = SubResource("BoxMesh_sign")
+
+[node name="SignLabel" type="Label3D" parent="StationSign"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.06)
+billboard = 0
+double_sided = false
+modulate = Color(0.1, 0.1, 0.15, 1)
+text = "पुणे जंक्शन • PUNE JN"
+font_size = 32
+outline_size = 4
+
+[node name="TrainWagon" parent="." instance=ExtResource("5_train")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -7.5)
+
+[node name="StreetLamp1" parent="." instance=ExtResource("6_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="StreetLamp2" parent="." instance=ExtResource("6_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="RainParticles" parent="." instance=ExtResource("4_rain")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -6)
+
+[node name="NPCMeera" parent="." instance=ExtResource("3_meera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 0, -4.5)
+chapter_override = 6
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 3.0)

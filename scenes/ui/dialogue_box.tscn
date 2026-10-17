@@ -1,0 +1,152 @@
+[gd_scene load_steps=5 format=3 uid="uid://dialoguebox01"]
+
+[ext_resource type="Script" path="res://scripts/controllers/dialogue_box.gd" id="1_diag"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.1, 0.16, 0.92)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.85, 0.45, 0.58, 0.7)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_choices"]
+bg_color = Color(0.06, 0.08, 0.14, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.5, 0.65, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.6)
+shadow_size = 16
+
+[node name="DialogueBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_diag")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = -210.0
+offset_right = -60.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="SpeakerHeader" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="PortraitRect" type="ColorRect" parent="PanelContainer/MarginContainer/VBoxContainer/SpeakerHeader"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+color = Color(0.18, 0.38, 0.65, 1)
+
+[node name="InitialLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/SpeakerHeader/PortraitRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 20
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeakerName" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/SpeakerHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 20
+text = "Aarav"
+
+[node name="EmotionTag" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/SpeakerHeader"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "• Thinking"
+
+[node name="MarathiText" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.96, 0.98, 1, 1)
+theme_override_font_sizes/normal_font_size = 17
+bbcode_enabled = true
+text = "Engineering cha workload kami hota mhanun Pune la alo hoto…"
+fit_content = true
+scroll_active = false
+
+[node name="EnglishText" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.78, 0.84, 0.92, 0.9)
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "[i]I thought engineering workload was enough, but life here has its own exams.[/i]"
+fit_content = true
+scroll_active = false
+
+[node name="ContinuePrompt" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.55, 0.7, 0.8)
+theme_override_font_sizes/font_size = 12
+text = "▼ Tap or press E to continue"
+horizontal_alignment = 2
+
+[node name="ChoicesPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -140.0
+offset_right = 300.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_choices")
+
+[node name="ChoicesVBox" type="VBoxContainer" parent="ChoicesPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1

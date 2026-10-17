@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>After the Rain ❤️ — 3D Indian Romantic Story Game</title>
+  <meta name="description" content="After the Rain — A 3D Indian Romantic Story Adventure set in Pune, Maharashtra. Play as Aarav Patil, explore rainy FC Road, make dialogue choices with Meera, and unlock multiple endings.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="../icon.svg">
+</head>
+<body>
+
+  <!-- 3D WebGL Canvas -->
+  <div id="canvas-container">
+    <canvas id="webgl-canvas"></canvas>
+  </div>
+
+  <!-- Interactive UI Overlay -->
+  <div id="ui-root">
+
+    <!-- Top In-Game HUD -->
+    <header id="game-hud" class="interactive hidden">
+      <div class="hud-topbar">
+        <h1 id="chapter-title">Chapter 1 — Anjaan Shehar, Anjaani Mulakaat</h1>
+        <p id="chapter-location">📍 FC Road, Pune (Rainy Evening, 6:45 PM)</p>
+        <p id="mission-objective">🎯 Catch the loose drawing paper before it gets soaked!</p>
+      </div>
+
+      <div class="hud-stats">
+        <span id="stat-affection">❤️ 20</span>
+        <span id="stat-trust">🤝 20</span>
+      </div>
+
+      <button id="pause-btn">⏸ Menu</button>
+    </header>
+
+    <!-- Mission Complete Banner -->
+    <div id="mission-banner" class="hidden">
+      <span id="mission-banner-text">✨ MISSION COMPLETE</span>
+    </div>
+
+    <!-- Virtual Joystick for Mobile Touch -->
+    <div id="virtual-joystick" class="interactive">
+      <div id="joystick-tip"></div>
+    </div>
+
+    <!-- Action Buttons for Mobile Touch -->
+    <div id="action-controls" class="interactive">
+      <button id="sprint-btn" class="action-circle-btn" title="Toggle Sprint">🏃</button>
+      <button id="interact-btn" class="action-pill-btn hidden">💬 Interact</button>
+    </div>
+
+    <!-- Bilingual Typewriter Dialogue Box -->
+    <div id="dialogue-box" class="interactive hidden">
+      <div class="dialogue-header">
+        <div id="speaker-portrait">
+          <span id="speaker-initial">A</span>
+        </div>
+        <span id="speaker-name">Aarav</span>
+        <span id="speaker-emotion">• Thinking</span>
+      </div>
+      <p id="marathi-text">Engineering cha workload kami hota mhanun Pune la alo hoto…</p>
+      <p id="english-text">I thought engineering workload was enough, but life here in Pune has its own exams.</p>
+      <div class="dialogue-continue">▼ Tap or click to continue</div>
+    </div>
+
+    <!-- Story Choices Modal -->
+    <div id="choices-modal" class="interactive hidden">
+      <div class="choices-title">What will you say?</div>
+      <div id="choices-list"></div>
+    </div>
+
+    <!-- Smartphone Messaging Modal (Evening SMS & Epilogue) -->
+    <div id="phone-modal" class="interactive hidden">
+      <div class="phone-header">
+        <span class="phone-contact">Meera 🌸</span>
+        <span class="phone-time">9:42 PM</span>
+      </div>
+      <div id="phone-messages"></div>
+      <div id="phone-typing" class="hidden">Meera is typing...</div>
+      <div class="phone-footer">
+        <button id="phone-reply-btn">Tap to Reply</button>
+      </div>
+    </div>
+
+    <!-- Main Title Screen Menu -->
+    <div id="main-menu" class="full-modal interactive">
+      <div class="modal-card">
+        <h1 class="game-title">AFTER THE RAIN ❤️</h1>
+        <p class="game-subtitle">An Indian Romantic Story Game • Pune, Maharashtra</p>
+        <p class="game-tagline">"Sometimes, the person you meet by chance becomes the person you pray to never lose."</p>
+
+        <div class="menu-buttons">
+          <button id="menu-new-game" class="menu-btn primary">New Game</button>
+          <button id="menu-continue" class="menu-btn">Continue</button>
+          <button id="menu-chapter-select" class="menu-btn">Chapter Select</button>
+          <button id="menu-credits" class="menu-btn">Story & Credits</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chapter Select Modal -->
+    <div id="chapter-select-modal" class="full-modal interactive hidden">
+      <div class="modal-card">
+        <h2 class="choices-title">Select Chapter</h2>
+        <div id="chapter-list" style="display:flex; flex-direction:column; gap:8px;"></div>
+        <button id="close-chapter-select" class="menu-btn" style="margin-top:12px;">Close</button>
+      </div>
+    </div>
+
+    <!-- Credits & Story Info Modal -->
+    <div id="credits-modal" class="full-modal interactive hidden">
+      <div class="modal-card">
+        <h2 class="choices-title">About After the Rain</h2>
+        <div style="font-size:0.92rem; line-height:1.6; color:#cbd5e1;">
+          <p><strong>Setting:</strong> Pune, Maharashtra (FC Road, Vetal Tekdi, Koregaon Park, Pune Railway Station)</p>
+          <p><strong>Characters:</strong> Aarav Patil (Engineering) & Meera Deshmukh (Architecture)</p>
+          <p><strong>Theme:</strong> A chance monsoon meeting blossoming into meaningful choices, dreams, and unconditional love.</p>
+          <p><strong>Features:</strong> 6 Playable Chapters, 4 Branching Endings, Authentic Marathi & English Dialogues, 3D Anime Visuals, and Procedural Monsoon Audio.</p>
+        </div>
+        <button id="close-credits" class="menu-btn" style="margin-top:12px;">Back</button>
+      </div>
+    </div>
+
+    <!-- In-Game Pause Menu -->
+    <div id="pause-modal" class="full-modal interactive hidden">
+      <div class="modal-card" style="width:min(90%, 380px);">
+        <h2 class="choices-title">Game Paused</h2>
+        <div class="menu-buttons">
+          <button id="pause-resume" class="menu-btn primary">Resume</button>
+          <button id="pause-restart" class="menu-btn">Restart Chapter</button>
+          <button id="pause-title" class="menu-btn">Quit to Title</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Ending & Epilogue Screen -->
+    <div id="ending-screen" class="full-modal interactive hidden">
+      <div class="modal-card">
+        <h2 id="ending-title">Ending 1 — Aapla Prem (Our Love)</h2>
+        <p id="ending-summary">Aarav and Meera maintain trust through the distance and eventually reunite in Pune.</p>
+        
+        <div id="ending-epilogue"></div>
+        <div id="ending-stats"></div>
+
+        <div class="ending-actions">
+          <button id="ending-epilogue-btn" class="menu-btn primary" style="font-size:0.9rem;">💬 Epilogue Scene</button>
+          <button id="ending-replay-btn" class="menu-btn" style="font-size:0.9rem;">Play Again</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/three.min.js"></script>
+  <script src="js/story_data.js"></script>
+  <script src="js/audio_engine.js"></script>
+  <script src="js/character_3d.js"></script>
+  <script src="js/environment_3d.js"></script>
+  <script src="js/controls.js"></script>
+  <script src="js/ui_manager.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

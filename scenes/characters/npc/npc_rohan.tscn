@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://npc_rohan001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/npc_rohan.gd" id="1_rohan"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rohan"]
+radius = 0.32
+height = 1.72
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_zone"]
+height = 2.0
+radius = 2.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_Skin"]
+albedo_color = Color(0.95, 0.82, 0.72, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Hoodie"]
+albedo_color = Color(0.85, 0.62, 0.18, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Cargos"]
+albedo_color = Color(0.25, 0.28, 0.22, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_torso"]
+radius = 0.24
+height = 0.6
+
+[sub_resource type="SphereMesh" id="SphereMesh_head"]
+radius = 0.18
+height = 0.36
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_leg"]
+radius = 0.09
+height = 0.75
+
+[node name="NPCRohan" type="CharacterBody3D"]
+collision_layer = 1
+script = ExtResource("1_rohan")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.86, 0)
+shape = SubResource("CapsuleShape3D_rohan")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="Torso" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+material_override = SubResource("Mat_Hoodie")
+mesh = SubResource("CapsuleMesh_torso")
+
+[node name="Head" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
+material_override = SubResource("Mat_Skin")
+mesh = SubResource("SphereMesh_head")
+
+[node name="LegL" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0.4, 0)
+material_override = SubResource("Mat_Cargos")
+mesh = SubResource("CapsuleMesh_leg")
+
+[node name="LegR" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0.4, 0)
+material_override = SubResource("Mat_Cargos")
+mesh = SubResource("CapsuleMesh_leg")
+
+[node name="InteractArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("CylinderShape3D_zone")
+
+[node name="PromptBubble" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+modulate = Color(1, 0.95, 0.6, 1)
+outline_modulate = Color(0.1, 0.1, 0.15, 0.9)
+text = "💬 Talk to Rohan"
+font_size = 26
+outline_size = 8

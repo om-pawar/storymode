@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://ch5_collegenight001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/level_chapter5.gd" id="1_ch5"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_meera.tscn" id="3_meera"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/street_lamp.tscn" id="4_lamp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_night"]
+sky_top_color = Color(0.06, 0.08, 0.14, 1)
+sky_horizon_color = Color(0.16, 0.18, 0.26, 1)
+ground_bottom_color = Color(0.04, 0.05, 0.08, 1)
+ground_horizon_color = Color(0.12, 0.14, 0.2, 1)
+
+[sub_resource type="Sky" id="Sky_night"]
+sky_material = SubResource("ProceduralSkyMaterial_night")
+
+[sub_resource type="Environment" id="Environment_ch5"]
+background_mode = 2
+sky = SubResource("Sky_night")
+ambient_light_source = 3
+ambient_light_color = Color(0.3, 0.35, 0.5, 1)
+ambient_light_energy = 0.6
+fog_enabled = true
+fog_light_color = Color(0.1, 0.12, 0.18, 1)
+fog_density = 0.015
+
+[sub_resource type="StandardMaterial3D" id="Mat_Road"]
+albedo_color = Color(0.16, 0.18, 0.2, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_road"]
+size = Vector3(36, 0.2, 36)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_road"]
+size = Vector3(36, 0.2, 36)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Gate"]
+albedo_color = Color(0.2, 0.22, 0.25, 1)
+metallic = 0.8
+roughness = 0.3
+
+[sub_resource type="BoxMesh" id="BoxMesh_gate"]
+size = Vector3(12, 4.5, 0.5)
+
+[node name="Chapter5CollegeNight" type="Node3D"]
+script = ExtResource("1_ch5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ch5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 15, 0)
+light_color = Color(0.4, 0.5, 0.7, 1)
+light_energy = 0.4
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("Mat_Road")
+mesh = SubResource("BoxMesh_road")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_road")
+
+[node name="CollegeGate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25, -6)
+material_override = SubResource("Mat_Gate")
+mesh = SubResource("BoxMesh_gate")
+
+[node name="StreetLamp" parent="." instance=ExtResource("4_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, -3.5)
+
+[node name="NPCMeera" parent="." instance=ExtResource("3_meera")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.8, 0, -3.8)
+chapter_override = 5
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 1.8)

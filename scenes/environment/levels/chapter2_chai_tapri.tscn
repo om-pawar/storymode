@@ -1,0 +1,85 @@
+[gd_scene load_steps=14 format=3 uid="uid://ch2_chaitapri001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/level_chapter2.gd" id="1_ch2"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_meera.tscn" id="3_meera"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_rohan.tscn" id="4_rohan"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/chai_tapri.tscn" id="5_tapri"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/street_lamp.tscn" id="6_lamp"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_evening"]
+sky_top_color = Color(0.18, 0.22, 0.35, 1)
+sky_horizon_color = Color(0.65, 0.42, 0.35, 1)
+ground_bottom_color = Color(0.12, 0.12, 0.16, 1)
+ground_horizon_color = Color(0.3, 0.25, 0.25, 1)
+
+[sub_resource type="Sky" id="Sky_evening"]
+sky_material = SubResource("ProceduralSkyMaterial_evening")
+
+[sub_resource type="Environment" id="Environment_ch2"]
+background_mode = 2
+sky = SubResource("Sky_evening")
+ambient_light_source = 3
+ambient_light_color = Color(0.6, 0.48, 0.42, 1)
+ambient_light_energy = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Pavement"]
+albedo_color = Color(0.24, 0.22, 0.2, 1)
+roughness = 0.65
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(35, 0.2, 35)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(35, 0.2, 35)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wall"]
+albedo_color = Color(0.38, 0.32, 0.28, 1)
+roughness = 0.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(20, 3.5, 0.6)
+
+[node name="Chapter2ChaiTapri" type="Node3D"]
+script = ExtResource("1_ch2")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ch2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 15, 0)
+light_color = Color(1, 0.82, 0.65, 1)
+light_energy = 0.9
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("Mat_Pavement")
+mesh = SubResource("BoxMesh_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="CollegeWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -8)
+material_override = SubResource("Mat_Wall")
+mesh = SubResource("BoxMesh_wall")
+
+[node name="ChaiTapri" parent="." instance=ExtResource("5_tapri")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="StreetLamp" parent="." instance=ExtResource("6_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0, -4.5)
+
+[node name="NPCRohan" parent="." instance=ExtResource("4_rohan")]
+transform = Transform3D(0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, -1.8, 0, -3.8)
+
+[node name="NPCMeera" parent="." instance=ExtResource("3_meera")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 2.5, 0, -3.6)
+chapter_override = 2
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 1.5)

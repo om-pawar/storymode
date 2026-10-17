@@ -1,0 +1,100 @@
+[gd_scene load_steps=15 format=3 uid="uid://ch1_fcroad001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/level_chapter1.gd" id="1_ch1"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_meera.tscn" id="3_meera"]
+[ext_resource type="PackedScene" path="res://scenes/environment/rain_particles.tscn" id="4_rain"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/bus_stop.tscn" id="5_bus"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/street_lamp.tscn" id="6_lamp"]
+[ext_resource type="PackedScene" path="res://scenes/environment/props/flying_paper.tscn" id="7_paper"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_monsoon"]
+sky_top_color = Color(0.12, 0.16, 0.24, 1)
+sky_horizon_color = Color(0.24, 0.32, 0.42, 1)
+ground_bottom_color = Color(0.08, 0.1, 0.14, 1)
+ground_horizon_color = Color(0.2, 0.26, 0.34, 1)
+
+[sub_resource type="Sky" id="Sky_monsoon"]
+sky_material = SubResource("ProceduralSkyMaterial_monsoon")
+
+[sub_resource type="Environment" id="Environment_ch1"]
+background_mode = 2
+sky = SubResource("Sky_monsoon")
+ambient_light_source = 3
+ambient_light_color = Color(0.4, 0.48, 0.6, 1)
+ambient_light_energy = 0.8
+fog_enabled = true
+fog_light_color = Color(0.18, 0.24, 0.32, 1)
+fog_density = 0.015
+
+[sub_resource type="StandardMaterial3D" id="Mat_WetRoad"]
+albedo_color = Color(0.14, 0.15, 0.18, 1)
+roughness = 0.2
+metallic = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_road"]
+size = Vector3(40, 0.2, 40)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(40, 0.2, 40)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Building"]
+albedo_color = Color(0.18, 0.22, 0.28, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_building"]
+size = Vector3(8, 12, 6)
+
+[node name="Chapter1FCRoad" type="Node3D"]
+script = ExtResource("1_ch1")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ch1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 15, 0)
+light_color = Color(0.68, 0.78, 0.92, 1)
+light_energy = 0.7
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("Mat_WetRoad")
+mesh = SubResource("BoxMesh_road")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="BackgroundBuildingL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 6, -10)
+material_override = SubResource("Mat_Building")
+mesh = SubResource("BoxMesh_building")
+
+[node name="BackgroundBuildingR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 6, -10)
+material_override = SubResource("Mat_Building")
+mesh = SubResource("BoxMesh_building")
+
+[node name="BusStop" parent="." instance=ExtResource("5_bus")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="StreetLamp1" parent="." instance=ExtResource("6_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -2.5)
+
+[node name="StreetLamp2" parent="." instance=ExtResource("6_lamp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -2.5)
+
+[node name="RainParticles" parent="." instance=ExtResource("4_rain")]
+
+[node name="NPCMeera" parent="." instance=ExtResource("3_meera")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, 0.8, 0, -3.2)
+chapter_override = 1
+
+[node name="FlyingPaper" parent="." instance=ExtResource("7_paper")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.45, 1.8)
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.8, 0, 4.2)

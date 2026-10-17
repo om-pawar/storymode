@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://flying_paper01"]
+
+[ext_resource type="Script" path="res://scripts/controllers/flying_paper.gd" id="1_paper"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_paper"]
+size = Vector3(1.2, 1.2, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_paper"]
+albedo_color = Color(0.98, 0.96, 0.9, 1)
+roughness = 0.8
+emission_enabled = true
+emission = Color(0.3, 0.4, 0.6, 1)
+emission_energy_multiplier = 0.3
+
+[sub_resource type="QuadMesh" id="QuadMesh_paper"]
+size = Vector2(0.42, 0.56)
+
+[node name="FlyingPaper" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_paper")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_paper")
+
+[node name="PaperMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_paper")
+mesh = SubResource("QuadMesh_paper")
+
+[node name="PromptBubble" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+modulate = Color(1, 0.95, 0.6, 1)
+outline_modulate = Color(0.1, 0.1, 0.15, 0.9)
+text = "📄 Catch Flying Drawing"
+font_size = 26
+outline_size = 8

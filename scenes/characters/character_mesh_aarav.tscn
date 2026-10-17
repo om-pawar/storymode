@@ -1,0 +1,133 @@
+[gd_scene load_steps=18 format=3 uid="uid://char_mesh_aarav01"]
+
+[ext_resource type="Script" path="res://scripts/controllers/character_animator.gd" id="1_anim"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Skin"]
+albedo_color = Color(0.96, 0.82, 0.73, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_Hair"]
+albedo_color = Color(0.1, 0.1, 0.12, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_Jacket"]
+albedo_color = Color(0.12, 0.24, 0.42, 1)
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="Mat_Shirt"]
+albedo_color = Color(0.88, 0.9, 0.94, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_Jeans"]
+albedo_color = Color(0.16, 0.2, 0.28, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_Shoes"]
+albedo_color = Color(0.22, 0.18, 0.14, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_Backpack"]
+albedo_color = Color(0.55, 0.16, 0.2, 1)
+roughness = 0.5
+
+[sub_resource type="CapsuleMesh" id="Mesh_Torso"]
+radius = 0.24
+height = 0.6
+
+[sub_resource type="SphereMesh" id="Mesh_Head"]
+radius = 0.18
+height = 0.36
+
+[sub_resource type="BoxMesh" id="Mesh_Hair"]
+size = Vector3(0.38, 0.2, 0.36)
+
+[sub_resource type="BoxMesh" id="Mesh_Backpack"]
+size = Vector3(0.32, 0.4, 0.18)
+
+[sub_resource type="CapsuleMesh" id="Mesh_Arm"]
+radius = 0.07
+height = 0.55
+
+[sub_resource type="CapsuleMesh" id="Mesh_Leg"]
+radius = 0.09
+height = 0.75
+
+[node name="CharacterMeshAarav" type="Node3D"]
+script = ExtResource("1_anim")
+character_name = "Aarav"
+
+[node name="Body" type="Node3D" parent="."]
+
+[node name="Hips" type="Node3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+
+[node name="LeftLeg" type="Node3D" parent="Body/Hips"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12, 0, 0)
+
+[node name="LegMesh" type="MeshInstance3D" parent="Body/Hips/LeftLeg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+material_override = SubResource("Mat_Jeans")
+mesh = SubResource("Mesh_Leg")
+
+[node name="Shoe" type="MeshInstance3D" parent="Body/Hips/LeftLeg"]
+transform = Transform3D(0.14, 0, 0, 0, 0.08, 0, 0, 0, 0.22, 0, -0.7, 0.04)
+material_override = SubResource("Mat_Shoes")
+mesh = SubResource("Mesh_Torso")
+
+[node name="RightLeg" type="Node3D" parent="Body/Hips"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12, 0, 0)
+
+[node name="LegMesh" type="MeshInstance3D" parent="Body/Hips/RightLeg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.35, 0)
+material_override = SubResource("Mat_Jeans")
+mesh = SubResource("Mesh_Leg")
+
+[node name="Shoe" type="MeshInstance3D" parent="Body/Hips/RightLeg"]
+transform = Transform3D(0.14, 0, 0, 0, 0.08, 0, 0, 0, 0.22, 0, -0.7, 0.04)
+material_override = SubResource("Mat_Shoes")
+mesh = SubResource("Mesh_Torso")
+
+[node name="Chest" type="Node3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+
+[node name="TorsoMesh" type="MeshInstance3D" parent="Body/Chest"]
+material_override = SubResource("Mat_Jacket")
+mesh = SubResource("Mesh_Torso")
+
+[node name="ShirtFront" type="MeshInstance3D" parent="Body/Chest"]
+transform = Transform3D(0.5, 0, 0, 0, 0.8, 0, 0, 0, 0.5, 0, 0.05, 0.14)
+material_override = SubResource("Mat_Shirt")
+mesh = SubResource("Mesh_Torso")
+
+[node name="Backpack" type="MeshInstance3D" parent="Body/Chest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, -0.22)
+material_override = SubResource("Mat_Backpack")
+mesh = SubResource("Mesh_Backpack")
+
+[node name="Head" type="Node3D" parent="Body/Chest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, 0)
+
+[node name="HeadMesh" type="MeshInstance3D" parent="Body/Chest/Head"]
+material_override = SubResource("Mat_Skin")
+mesh = SubResource("Mesh_Head")
+
+[node name="HairMesh" type="MeshInstance3D" parent="Body/Chest/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, -0.02)
+material_override = SubResource("Mat_Hair")
+mesh = SubResource("Mesh_Hair")
+
+[node name="LeftArm" type="Node3D" parent="Body/Chest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3, 0.15, 0)
+
+[node name="ArmMesh" type="MeshInstance3D" parent="Body/Chest/LeftArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0)
+material_override = SubResource("Mat_Jacket")
+mesh = SubResource("Mesh_Arm")
+
+[node name="RightArm" type="Node3D" parent="Body/Chest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0.15, 0)
+
+[node name="ArmMesh" type="MeshInstance3D" parent="Body/Chest/RightArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22, 0)
+material_override = SubResource("Mat_Jacket")
+mesh = SubResource("Mesh_Arm")

@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://chai_tapri001"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Wood"]
+albedo_color = Color(0.48, 0.3, 0.18, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="Mat_Awning"]
+albedo_color = Color(0.9, 0.28, 0.25, 1)
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="Mat_Kettle"]
+albedo_color = Color(0.85, 0.88, 0.9, 1)
+metallic = 0.95
+roughness = 0.2
+
+[sub_resource type="StandardMaterial3D" id="Mat_Glass"]
+albedo_color = Color(0.7, 0.45, 0.25, 0.7)
+transparency = 1
+roughness = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_counter"]
+size = Vector3(2.4, 0.9, 1.2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_awning"]
+size = Vector3(2.8, 0.08, 1.8)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kettle"]
+top_radius = 0.16
+bottom_radius = 0.22
+height = 0.38
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_glass"]
+top_radius = 0.04
+bottom_radius = 0.03
+height = 0.09
+
+[sub_resource type="BoxMesh" id="BoxMesh_board"]
+size = Vector3(2.0, 0.35, 0.05)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_counter"]
+size = Vector3(2.4, 1.0, 1.2)
+
+[node name="ChaiTapri" type="StaticBody3D"]
+
+[node name="Counter" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+material_override = SubResource("Mat_Wood")
+mesh = SubResource("BoxMesh_counter")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_counter")
+
+[node name="Awning" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 2.3, 0.1)
+material_override = SubResource("Mat_Awning")
+mesh = SubResource("BoxMesh_awning")
+
+[node name="ChaiKettle" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 1.1, 0.1)
+material_override = SubResource("Mat_Kettle")
+mesh = SubResource("CylinderMesh_kettle")
+
+[node name="CuttingChaiGlass1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 0.95, 0.2)
+material_override = SubResource("Mat_Glass")
+mesh = SubResource("CylinderMesh_glass")
+
+[node name="CuttingChaiGlass2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0.95, 0.2)
+material_override = SubResource("Mat_Glass")
+mesh = SubResource("CylinderMesh_glass")
+
+[node name="SignBoard" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0.95)
+material_override = SubResource("Mat_Wood")
+mesh = SubResource("BoxMesh_board")
+
+[node name="SignLabel" type="Label3D" parent="SignBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03)
+billboard = 0
+double_sided = false
+text = "FC ROAD CHAI TAPRI • स्पेशल कटिंग"
+font_size = 22
+outline_size = 6

@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://ch4_cafe001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/level_chapter4.gd" id="1_ch4"]
+[ext_resource type="PackedScene" path="res://scenes/characters/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/characters/npc/npc_meera.tscn" id="3_meera"]
+
+[sub_resource type="Environment" id="Environment_cafe"]
+background_mode = 1
+background_color = Color(0.12, 0.1, 0.09, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.85, 0.72, 0.58, 1)
+ambient_light_energy = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Floor"]
+albedo_color = Color(0.32, 0.2, 0.14, 1)
+roughness = 0.45
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+size = Vector3(18, 0.2, 18)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(18, 0.2, 18)
+
+[sub_resource type="StandardMaterial3D" id="Mat_CafeWall"]
+albedo_color = Color(0.24, 0.18, 0.15, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_wall"]
+size = Vector3(18, 4, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Table"]
+albedo_color = Color(0.45, 0.28, 0.18, 1)
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_table"]
+top_radius = 0.65
+bottom_radius = 0.65
+height = 0.75
+
+[node name="Chapter4Cafe" type="Node3D"]
+script = ExtResource("1_ch4")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cafe")
+
+[node name="WarmLight1" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, -2)
+light_color = Color(1, 0.85, 0.68, 1)
+light_energy = 2.2
+omni_range = 8.0
+
+[node name="WarmLight2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 3)
+light_color = Color(1, 0.85, 0.68, 1)
+light_energy = 2.0
+omni_range = 8.0
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+material_override = SubResource("Mat_Floor")
+mesh = SubResource("BoxMesh_floor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_floor")
+
+[node name="BackWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -6)
+material_override = SubResource("Mat_CafeWall")
+mesh = SubResource("BoxMesh_wall")
+
+[node name="CafeTable" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, -2.5)
+material_override = SubResource("Mat_Table")
+mesh = SubResource("CylinderMesh_table")
+
+[node name="NPCMeera" parent="." instance=ExtResource("3_meera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.6)
+chapter_override = 4
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5)

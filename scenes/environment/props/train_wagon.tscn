@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://train_wagon001"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_CoachBlue"]
+albedo_color = Color(0.14, 0.32, 0.64, 1)
+metallic = 0.3
+roughness = 0.45
+
+[sub_resource type="StandardMaterial3D" id="Mat_StripeYellow"]
+albedo_color = Color(0.96, 0.82, 0.22, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_Windows"]
+albedo_color = Color(0.1, 0.12, 0.16, 0.9)
+roughness = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(14, 3.4, 2.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_stripe"]
+size = Vector3(14.02, 0.35, 2.82)
+
+[sub_resource type="BoxMesh" id="BoxMesh_window"]
+size = Vector3(13.6, 0.6, 2.84)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wagon"]
+size = Vector3(14, 3.6, 2.8)
+
+[node name="TrainWagon" type="StaticBody3D"]
+
+[node name="CoachBody" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+material_override = SubResource("Mat_CoachBlue")
+mesh = SubResource("BoxMesh_body")
+
+[node name="YellowStripe" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+material_override = SubResource("Mat_StripeYellow")
+mesh = SubResource("BoxMesh_stripe")
+
+[node name="WindowRow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+material_override = SubResource("Mat_Windows")
+mesh = SubResource("BoxMesh_window")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("BoxShape3D_wagon")

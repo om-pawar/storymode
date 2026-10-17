@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://meera_npc001"]
+
+[ext_resource type="Script" path="res://scripts/controllers/npc_meera.gd" id="1_npc"]
+[ext_resource type="PackedScene" path="res://scenes/characters/character_mesh_meera.tscn" id="2_mesh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_meera"]
+radius = 0.3
+height = 1.68
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_zone"]
+height = 2.0
+radius = 2.2
+
+[node name="NPCMeera" type="CharacterBody3D"]
+collision_layer = 1
+script = ExtResource("1_npc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.84, 0)
+shape = SubResource("CapsuleShape3D_meera")
+
+[node name="CharacterMeshMeera" parent="." instance=ExtResource("2_mesh")]
+
+[node name="InteractArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractArea"]
+shape = SubResource("CylinderShape3D_zone")
+
+[node name="PromptBubble" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+modulate = Color(1, 0.9, 0.95, 1)
+outline_modulate = Color(0.1, 0.1, 0.2, 0.9)
+text = "💬 Talk to Meera"
+font_size = 28
+outline_size = 8

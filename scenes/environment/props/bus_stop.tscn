@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://bus_stop01"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Roof"]
+albedo_color = Color(0.18, 0.35, 0.65, 1)
+metallic = 0.5
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_Frame"]
+albedo_color = Color(0.85, 0.88, 0.9, 1)
+metallic = 0.7
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="Mat_Bench"]
+albedo_color = Color(0.45, 0.28, 0.18, 1)
+roughness = 0.6
+
+[sub_resource type="StandardMaterial3D" id="Mat_Sign"]
+albedo_color = Color(0.95, 0.25, 0.28, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_roof"]
+size = Vector3(4.5, 0.12, 2.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_pillar"]
+top_radius = 0.06
+bottom_radius = 0.06
+height = 2.8
+
+[sub_resource type="BoxMesh" id="BoxMesh_bench"]
+size = Vector3(3.0, 0.4, 0.45)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sign"]
+size = Vector3(1.6, 0.4, 0.06)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bench"]
+size = Vector3(3.0, 0.5, 0.5)
+
+[node name="BusStop" type="StaticBody3D"]
+
+[node name="Roof" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 2.8, 0)
+material_override = SubResource("Mat_Roof")
+mesh = SubResource("BoxMesh_roof")
+
+[node name="PillarL" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9, 1.4, -0.9)
+material_override = SubResource("Mat_Frame")
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="PillarR" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9, 1.4, -0.9)
+material_override = SubResource("Mat_Frame")
+mesh = SubResource("CylinderMesh_pillar")
+
+[node name="Bench" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.7)
+material_override = SubResource("Mat_Bench")
+mesh = SubResource("BoxMesh_bench")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, -0.7)
+shape = SubResource("BoxShape3D_bench")
+
+[node name="SignBoard" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0.9)
+material_override = SubResource("Mat_Sign")
+mesh = SubResource("BoxMesh_sign")
+
+[node name="SignLabel" type="Label3D" parent="SignBoard"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.04)
+billboard = 0
+double_sided = false
+text = "PMPML • FC ROAD"
+font_size = 28
+outline_size = 6
